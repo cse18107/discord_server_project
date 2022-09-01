@@ -1,13 +1,15 @@
 const User = require('../../models/user');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const postRegister = async (req,res)=> {
+    console.log(req.body);
     try{
         const {username, mail, password} = req.body;
 
         // check if user exists 
-        const userExists = await User.exist({mail: mail.toLowerCase()});
-
+        const userExists = await User.findOne({mail: mail.toLowerCase()});
+        console.log(userExists);
         if(userExists) {
             return res.status(409).send('E-mail already in use.');
         }
@@ -22,7 +24,14 @@ const postRegister = async (req,res)=> {
         });
 
         // create JWT token 
-        const token = 'JWT TOKEN';
+        const token = jwt.sign({
+            userId: user._id,
+            mail
+        }, process.env.TOKEN_KEY,
+            {
+                expiresIn:'24h',
+            }
+        );
 
         res.status(200).json({
             userDetails: {

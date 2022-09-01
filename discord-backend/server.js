@@ -14,6 +14,7 @@ app.use(express.json());
 app.use(cors());
 
 // register the routes
+console.log("call api");
 app.use('/api/auth',authRoutes);
 
 const server = http.createServer(app);
