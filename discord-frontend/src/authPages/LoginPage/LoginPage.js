@@ -4,11 +4,16 @@ import { validateLoginForm } from "../../shared/utils/validators";
 import LoginPageFooter from "./LoginPageFooter";
 import LoginPageHeader from "./LoginPageHeader";
 import LoginPageInputs from "./LoginPageInputs";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userLogin } from "../../store/slice/loginSlice";
 
 const LoginPage = () => {
   const [mail, setMail] = useState("");
   const [password, setPassword] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(()=>{
     setIsFormValid(validateLoginForm({mail,password}));
@@ -16,6 +21,7 @@ const LoginPage = () => {
 
   const handleLogin = () => {
     console.log('Log in');
+    dispatch(userLogin({mail,password,navigate}));
   }
 
   return (

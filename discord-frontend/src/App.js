@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import RegisterPage from './authPages/RegisterPage/RegisterPage';
 import LoginPage from './authPages/LoginPage/LoginPage';
 import Dashboard from './Dashboard/Dashboard';
+import AlertNotification from './shared/components/AlertNotification';
 
 function App() {
   return (
@@ -13,8 +14,9 @@ function App() {
       <Route path='/dashboard' element={<Dashboard/>} />
       <Route path='/' element={<Dashboard/>}/>
     </Routes>
+    <AlertNotification/>
     </>
   );
 }
 
-export default App;
+export default App; 
