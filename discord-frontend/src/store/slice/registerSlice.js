@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { register } from "../../api";
+import {openAlertMessage} from '../slice/alertMessageSlice';
 
 
 const initialState = {
@@ -8,10 +10,11 @@ const initialState = {
     error: '',
 }
 
+
 export const userRegister = createAsyncThunk('register/userRegister', (data) => {
     const {mail,username,password} = data;
     const {navigate} = data;
-    return axios.post('http://localhost:5002/api/auth/register', {mail,username,password}).then(response => [response.data, navigate]);
+    return register('/auth/register', {mail,username,password}).then(response => [response.data, navigate]);
 });
 
 const registerSlice = createSlice({
@@ -35,6 +38,8 @@ const registerSlice = createSlice({
             state.loading = false;
             state.register = [];
             state.error = action.error.message;
+            console.log(action.error);
+            
         })
     }
 });

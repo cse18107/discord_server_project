@@ -7,6 +7,7 @@ import RegisterPageFooter from "./RegisterPageFooter";
 import { validateRegisterForm } from "../../shared/utils/validators";
 import { userRegister } from "../../store/slice/registerSlice";
 import { useNavigate } from "react-router-dom";
+import { openAlertMessage } from "../../store/slice/alertMessageSlice";
 
 const RegisterPage = () => {
   const [mail, setMail] = useState("");
@@ -25,6 +26,11 @@ const RegisterPage = () => {
     dispatch(userRegister({mail,username,password,navigate}));
   }
   console.log(register);
+  useEffect(()=> {
+    if(register.error){
+      dispatch(openAlertMessage(register.error));
+    }
+  },[dispatch,register]);
   useEffect(()=> {
     setIsFormValid(validateRegisterForm({mail,username,password}));
   },[mail,username,password,setIsFormValid])

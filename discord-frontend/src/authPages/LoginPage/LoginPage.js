@@ -5,8 +5,9 @@ import LoginPageFooter from "./LoginPageFooter";
 import LoginPageHeader from "./LoginPageHeader";
 import LoginPageInputs from "./LoginPageInputs";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../../store/slice/loginSlice";
+import { openAlertMessage } from "../../store/slice/alertMessageSlice";
 
 const LoginPage = () => {
   const [mail, setMail] = useState("");
@@ -14,13 +15,19 @@ const LoginPage = () => {
   const [isFormValid, setIsFormValid] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const login = useSelector((state) => state.login);
 
   useEffect(()=>{
     setIsFormValid(validateLoginForm({mail,password}));
   },[mail,password,setIsFormValid]);
 
+  useEffect(()=> {
+    if(login.error){
+      dispatch(openAlertMessage(login.error));
+    }
+  },[dispatch,login])
+
   const handleLogin = () => {
-    console.log('Log in');
     dispatch(userLogin({mail,password,navigate}));
   }
 

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { login } from "../../api";
 
 
 const initialState = {
@@ -11,7 +12,8 @@ const initialState = {
 export const userLogin = createAsyncThunk('login/userLogin', (data)=> {
     const {mail,password} = data;
     const {navigate} = data;
-    return axios.post('http://localhost:5002/api/auth/login', {mail,password}).then(response=> [response.data,navigate])
+    // return axios.post('http://localhost:5002/api/auth/login', {mail,password}).then(response=> [response.data,navigate]);
+    return login('/auth/login', {mail,password}).then(response=> [response.data,navigate]);
 });
 
 const loginSlice = createSlice({
