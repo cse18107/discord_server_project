@@ -1,9 +1,14 @@
 import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from './slice/authSlice';
+import loginSlice from "./slice/loginSlice";
+import registerSlice from "./slice/registerSlice";
+import alertMessageSlice from "./slice/alertMessageSlice";
+
 
 const rootReducer = combineReducers({
-    auth: authReducer
+    login: loginSlice,
+    register: registerSlice,
+    alert: alertMessageSlice,
 });
 
 const store = configureStore({
